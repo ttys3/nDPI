@@ -164,7 +164,7 @@ static inline const struct net_device *xt_out(const struct xt_action_param *par)
 #endif
 #endif
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,19,0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,18,0)
 #define nf_ct_l3proto_try_module_get(a) 0
 #define nf_ct_l3proto_module_put(a)
 #endif
@@ -843,7 +843,7 @@ ndpi_alloc_flow (struct nf_ct_ext_ndpi *ct_ndpi)
 }
 #ifndef NF_CT_CUSTOM
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,19,0)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,18,0)
 static struct nf_ct_hook ndpi_nf_ct_hook={NULL,NULL,NULL};
 static struct nf_ct_hook *ndpi_nf_ct_hook_old=NULL;
 #endif
@@ -2762,7 +2762,7 @@ static void replace_nf_destroy(void)
 {
 	spin_lock(&ndpi_hook_mutex);
 	{
-#if LINUX_VERSION_CODE < KERNEL_VERSION(4,19,0)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(4,18,0)
 	ndpi_nf_ct_destroy = rcu_dereference_protected(nf_ct_destroy,lockdep_is_held(&ndpi_hook_mutex));
 	BUG_ON(ndpi_nf_ct_destroy == NULL);
         rcu_assign_pointer(nf_ct_destroy, ndpi_destroy_conntrack);
@@ -2785,7 +2785,7 @@ static void restore_nf_destroy(void)
 {
 	spin_lock(&ndpi_hook_mutex);
 	{
-#if LINUX_VERSION_CODE < KERNEL_VERSION(4,19,0)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(4,18,0)
 	void (*destroy)(struct nf_conntrack *);
 	destroy = rcu_dereference_protected(nf_ct_destroy,lockdep_is_held(&ndpi_hook_mutex));
 	BUG_ON(destroy != ndpi_destroy_conntrack);
